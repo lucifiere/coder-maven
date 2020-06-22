@@ -7,7 +7,7 @@ import com.lucfiere.resolver.type.DaoImplResolver
 
 import static com.lucfiere.utils.CommonUtils.capitalFirst
 
-class MtDaoImplResolver extends BaseAppender implements Appender, DaoImplResolver {
+class MtRepositoryImplResolver extends BaseAppender implements Appender, DaoImplResolver {
 
     @Override
     protected String headCode() {
@@ -18,13 +18,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Dao层实现
+ * Repository层实现
  * 
  * @author ${Cons.AUTHOR}
  * @date ${new Date().format("yyyy-MM-dd")}
  */ 
 @Repository
-public class ${capitalFirst(entityName)}DaoImpl implements ${capitalFirst(entityName)}Dao {
+public class ${capitalFirst(entityName)}RepositoryImpl implements ${capitalFirst(entityName)}Repository {
 
     @Autowired
     private ${capitalFirst(entityName)}Mapper ${entityName}Mapper;
@@ -35,17 +35,6 @@ public class ${capitalFirst(entityName)}DaoImpl implements ${capitalFirst(entity
     protected String bodyCode() {
         String capitalFirstEntity = capitalFirst(entityName)
         """
-    /**
-     * 根据Example查询符合条件的结果列表
-     * 
-     * @param ${entityName}Example 查询条件
-     * @return 结果列表
-     */
-    @Override
-    public List<${capitalFirstEntity}> select${capitalFirstEntity}ListByExample(${capitalFirstEntity} ${entityName}Example) {
-        return ${entityName}Mapper.select${capitalFirstEntity}ListByExample(${entityName}Example);
-    }
-
     /**
      * 根据DO参数查询符合条件的结果列表
      * 

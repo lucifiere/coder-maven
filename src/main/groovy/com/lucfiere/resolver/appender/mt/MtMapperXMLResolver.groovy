@@ -1,16 +1,17 @@
-package com.lucfiere.resolver.appender
+package com.lucfiere.resolver.appender.mt
 
+import com.lucfiere.resolver.appender.Appender
+import com.lucfiere.resolver.appender.BaseAppender
 import com.lucfiere.resolver.type.MapperXMLResolver
 import org.apache.commons.lang3.StringUtils
 
 import static com.lucfiere.utils.CommonUtils.capitalFirst
 
-class StandardMapperXMLResolver extends BaseAppender implements Appender, MapperXMLResolver {
+class MtMapperXMLResolver extends BaseAppender implements Appender, MapperXMLResolver {
 
     @Override
     protected String headCode() {
-        """
-<?xml version="1.0" encoding="UTF-8" ?>
+        """<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="${capitalFirst(entityName)}Mapper">
@@ -21,8 +22,6 @@ class StandardMapperXMLResolver extends BaseAppender implements Appender, Mapper
     protected String bodyCode() {
         baseResultMapCode() +
                 baseColCode() +
-                criteriaCode() +
-                selectByExampleCode() +
                 selectById() +
                 selectListByParam() +
                 deleteById() +
@@ -30,71 +29,6 @@ class StandardMapperXMLResolver extends BaseAppender implements Appender, Mapper
                 insert()
     }
 
-    private criteriaCode = { ->
-        """
-    <sql id="Example_Where_Clause">
-        <where>
-            <foreach collection="oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" suffix=")" prefixOverrides="and">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and \${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and \${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and \${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and \${criterion.condition}
-                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
-            </foreach>
-        </where>
-    </sql>
-    
-    <sql id="Update_By_Example_Where_Clause">
-        <where>
-            <foreach collection="example.oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" suffix=")" prefixOverrides="and">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and \${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and \${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and \${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and \${criterion.condition}
-                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
-            </foreach>
-        </where>
-    </sql>
-    """
-    }
 
     private baseResultMapCode = { ->
         String code = """
@@ -123,27 +57,6 @@ class StandardMapperXMLResolver extends BaseAppender implements Appender, Mapper
     </sql>
     """
         code
-    }
-
-    private selectByExampleCode = { ->
-        """
-    <select id="select${capitalFirst(entityName)}ListByExample" resultMap="BaseResultMap" parameterType="${
-            capitalFirst(entityName)
-        }Example">
-        select
-        <if test="distinct">
-            distinct
-        </if>
-        <include refid="Base_Column_List"/>
-        from ${completeTableName}
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-        <if test="orderByClause != null" >
-            order by \${orderByClause}
-        </if> 
-    </select>
-    """
     }
 
     private selectById = { ->

@@ -1,11 +1,13 @@
-package com.lucfiere.resolver.appender
+package com.lucfiere.resolver.appender.mt
 
 import com.lucfiere.common.Cons
+import com.lucfiere.resolver.appender.Appender
+import com.lucfiere.resolver.appender.BaseAppender
 import com.lucfiere.resolver.type.DaoResolver
 
 import static com.lucfiere.utils.CommonUtils.capitalFirst
 
-class StandardDaoResolver extends BaseAppender implements Appender, DaoResolver {
+class MtRespResolver extends BaseAppender implements Appender, DaoResolver {
 
     @Override
     protected String headCode() {
@@ -18,7 +20,7 @@ import java.util.List;
  * @author ${Cons.AUTHOR}
  * @date ${new Date().format("yyyy-MM-dd")}
  */ 
-public interface ${capitalFirst(entityName)}Dao {
+public interface ${capitalFirst(entityName)}Repository {
         """
     }
 
@@ -26,14 +28,6 @@ public interface ${capitalFirst(entityName)}Dao {
     protected String bodyCode() {
         String capitalFirstEntity = capitalFirst(entityName)
         """
-    /**
-     * 根据Example查询符合条件的结果列表
-     * 
-     * @param ${entityName}Example 查询条件
-     * @return 结果列表
-     */
-    List<${capitalFirstEntity}> select${capitalFirstEntity}ListByExample(${capitalFirstEntity} ${entityName}Example);
-
     /**
      * 根据DO参数查询符合条件的结果列表
      * 

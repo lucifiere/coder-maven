@@ -13,7 +13,7 @@ class Demo {
                 .setDdlPath(Cons.INPUT_PATH)
                 .setTargetPath(Cons.OUT_PATH)
                 .create()
-        bootstrap.resolvers(ResolverFactory.defaultResolvers)
+        bootstrap.resolvers(ResolverFactory.mtResolvers)
         bootstrap.execute(context)
     }
 

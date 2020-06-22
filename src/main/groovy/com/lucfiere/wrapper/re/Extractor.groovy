@@ -10,7 +10,7 @@ class Extractor {
     public static String FILED_IDENTITY = "`"
 
     static String extractFiled(String value) {
-        isFiled(value) ? value.substring(1, value.length() - 1) : ""
+        isFiled(value) ? value.substring(1, value.length() - 1).trim() : ""
     }
 
     static String extractComment(String text) {
