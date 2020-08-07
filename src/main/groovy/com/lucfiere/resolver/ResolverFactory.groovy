@@ -1,6 +1,7 @@
 package com.lucfiere.resolver
 
 import com.lucfiere.resolver.appender.*
+import com.lucfiere.resolver.appender.mt.MtMapperResolver
 import com.lucfiere.resolver.appender.mt.MtMapperXMLResolver
 import com.lucfiere.resolver.appender.mt.MtRepositoryImplResolver
 import com.lucfiere.resolver.appender.mt.MtRespResolver
@@ -35,6 +36,7 @@ class ResolverFactory {
                     new StandardPojoResolver(),
                     new MtMapperXMLResolver(),
                     new MtRepositoryImplResolver(),
+                    new MtMapperResolver(),
                     new MtRespResolver()
             ]
 

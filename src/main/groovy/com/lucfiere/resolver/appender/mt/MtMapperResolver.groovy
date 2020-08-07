@@ -3,30 +3,32 @@ package com.lucfiere.resolver.appender.mt
 import com.lucfiere.common.Cons
 import com.lucfiere.resolver.appender.Appender
 import com.lucfiere.resolver.appender.BaseAppender
-import com.lucfiere.resolver.type.DaoResolver
+import com.lucfiere.resolver.type.MapperResolver
 
 import static com.lucfiere.utils.CommonUtils.capitalFirst
 
-class MtRespResolver extends BaseAppender implements Appender, DaoResolver {
+class MtMapperResolver extends BaseAppender implements Appender, MapperResolver {
 
     @Override
     protected String headCode() {
         """
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 /**
- * Dao层接口
+ * Mapper层
  * 
  * @author ${Cons.AUTHOR}
  * Date ${new Date().format("yyyy-MM-dd")}
  */ 
-public interface ${capitalFirst(entityName)}Repository {
+public interface ${capitalFirst(entityName)}Mapper {
         """
     }
 
     @Override
     protected String bodyCode() {
-        String capitalFirstEntity = capitalFirst(entityName)
+        String capitalFirstEntityName = capitalFirst(entityName)
         """
     /**
      * 根据DO参数查询符合条件的结果列表
@@ -34,15 +36,15 @@ public interface ${capitalFirst(entityName)}Repository {
      * @param ${entityName} 查询条件
      * @return 结果列表
      */
-    List<${capitalFirstEntity}> select${capitalFirstEntity}ListByParam(${capitalFirstEntity} ${entityName});
+    List<${capitalFirstEntityName}> select${capitalFirstEntityName}ListByParam(${capitalFirstEntityName} ${entityName});
 
     /**
      * 根据ID查询符合条件的结果
      * 
-     * @param id 主键
+     * @param id 查询条件
      * @return 结果
      */
-    ${capitalFirstEntity} select${capitalFirstEntity}ById(Long id);
+    ${capitalFirstEntityName} select${capitalFirstEntityName}ById(Long id);
 
     /**
      * 单条数据新增
@@ -50,7 +52,7 @@ public interface ${capitalFirst(entityName)}Repository {
      * @param ${entityName} 待入库数据
      * @return 影响行数
      */
-    Long insert${capitalFirstEntity}(${capitalFirstEntity} ${entityName});
+    Long insert${capitalFirstEntityName}(${capitalFirstEntityName} ${entityName});
 
     /**
      * 根据ID对单条数据更新
@@ -58,14 +60,14 @@ public interface ${capitalFirst(entityName)}Repository {
      * @param ${entityName} 待入库数据
      * @return 影响行数
      */
-    Long update${capitalFirstEntity}ById(${capitalFirstEntity} ${entityName});
+    Long update${capitalFirstEntityName}ById(${capitalFirstEntityName} ${entityName});
 
     /**
      * 根据主键删除
      * 
      * @param id 主键
      */
-    void delete${capitalFirstEntity}ById(Long id);
+    void delete${capitalFirstEntityName}ById(Long id);
         """
     }
 

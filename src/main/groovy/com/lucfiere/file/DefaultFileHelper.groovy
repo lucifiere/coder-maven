@@ -9,10 +9,10 @@ class DefaultFileHelper implements FileHelper {
 
     private static Map<String, String> OUTPUT_INFO = [
             "pojoContent"       : ".java",
-            "daoContent"        : "Dao.java",
+            "daoContent"        : "Repository.java",
             "mapperContent"     : "Mapper.java",
             "criteriaContent"   : "Example.java",
-            "daoImplContent"    : "DaoImpl.java",
+            "daoImplContent"    : "RepositoryImpl.java",
             "serviceImplContent": "ServiceImpl.java",
             "serviceContent"    : "Service.java",
             "mapperXmlContent"  : "Mapper.xml"

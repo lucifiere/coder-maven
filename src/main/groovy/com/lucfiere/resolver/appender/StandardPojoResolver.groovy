@@ -17,7 +17,7 @@ import java.util.Date;
  * DO POJO
  * 
  * @author ${Cons.AUTHOR}
- * @date ${new Date().format("yyyy-MM-dd")}
+ * Date ${new Date().format("yyyy-MM-dd")}
  */ 
 public class ${capitalFirst(entityName)} {
         """

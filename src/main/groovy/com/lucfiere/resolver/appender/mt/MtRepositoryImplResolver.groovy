@@ -21,12 +21,12 @@ import java.util.List;
  * Repository层实现
  * 
  * @author ${Cons.AUTHOR}
- * @date ${new Date().format("yyyy-MM-dd")}
+ * Date ${new Date().format("yyyy-MM-dd")}
  */ 
 @Repository
 public class ${capitalFirst(entityName)}RepositoryImpl implements ${capitalFirst(entityName)}Repository {
 
-    @Autowired
+    @Resource
     private ${capitalFirst(entityName)}Mapper ${entityName}Mapper;
         """
     }
